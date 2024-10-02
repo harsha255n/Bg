@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog_post.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc; 
+        }
+    </style>
+</head>
+<body class="opacity-0 transition-opacity duration-500" id="blogBody">
+
+    {% if query %}
+    <div class="max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md mt-10">
+        <h2 class="text-xl font-bold mb-4">Search Results for "{{ query }}"</h2>
+        {% if results %}
+            <ul class="space-y-4">
+                {% for blog in results %}
+                    <li class="border-b border-gray-200 pb-2">
+                        <h3 class="text-lg font-semibold">
+                            <a href="{% url 'blog_view' blog.id %}">{{ blog.title }}</a>
+                        </h3>
+                        <p>{{ blog.summary }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    
+    {% for i in data %}
+        <div class="max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md mt-10 opacity-0 transition-opacity duration-500 transform scale-95 blog-post">
+            <h1 class="text-3xl font-bold mb-4">{{ i.title }}</h1>
+            <div class="text-lg leading-8 text-gray-600">
+                <p>{{ i.content }}</p>
+                <p class="text-sm text-gray-500 mb-4">Created at: {{ i.created_at }}</p>
+                <div class="flex space-x-2">
+                    <a href="{% url 'blog_delete' i.id %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">Delete</a>
+                    <a href="{% url 'blog_update' i.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">Update</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const blogBody = document.getElementById('blogBody');
+            const blogPosts = document.querySelectorAll('.blog-post');
+
+            
+            blogBody.classList.remove('opacity-0');
+            blogBody.classList.add('opacity-100');
+
+        
+            blogPosts.forEach((post, index) => {
+                setTimeout(() => {
+                    post.classList.remove('opacity-0', 'scale-95');
+                    post.classList.add('opacity-100', 'scale-100');
+                }, index * 150); 
+            });
+        });
+
+        function validateSearch() {
+            const searchInput = document.querySelector('input[type="search"]');
+            if (searchInput.value.trim() === '') {
+                alert("Please enter a search term.");
+                return false; 
+            }
+            return true; 
+        }
+    </script>
+
+</body>
+</html>
+
+{% endblock %}

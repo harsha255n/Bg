@@ -1,0 +1,119 @@
+
+
+</body>
+</html>
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+</head>
+<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
+
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a class="text-white text-lg font-bold" href="{% url 'blog_list' %}">MyBlogs</a>
+            <div class="flex items-center space-x-4">
+                <a href="{% url 'blog_create' %}" class="border border-yellow-400 text-yellow-400 px-4 py-2 rounded hover:bg-yellow-400 hover:text-black transition">Create a New Blog</a>
+
+                <form class="flex space-x-2" role="search" action="{% url 'search_blogs' %}" method="get" onsubmit="return validateSearch()">
+                    <input class="form-input px-4 py-2 border border-gray-300 rounded" type="search" name="q" placeholder="Search by ID or Title" aria-label="Search">
+                    <button class="border border-yellow-400 text-yellow-400 px-4 py-2 rounded hover:bg-yellow-400 hover:text-black transition transform active:scale-95" type="submit">Search</button>
+                </form>
+                
+
+                <div class="relative">
+                    <button class="flex items-center text-white focus:outline-none" id="profileDropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user mr-2"></i> Profile
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded shadow-lg hidden transition-opacity duration-200 ease-in-out" id="dropdownMenu">
+                        <a class="block px-4 py-2 hover:bg-yellow-400" href="{% url 'profile_view' %}">View Profile</a>
+                        <hr class="border-gray-700">
+                        <a class="block px-4 py-2 hover:bg-yellow-400" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="flex-grow">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-yellow-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-yellow-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-yellow-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-yellow-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; 2024 MyBlogs. All rights reserved.</p>
+            <nav class="flex justify-center space-x-4 mt-4">
+                <a href="{% url 'blog_list' %}" class="text-gray-400 hover:text-yellow-400 transition">Home</a>
+                <a href="{% url 'profile_view' %}" class="text-gray-400 hover:text-yellow-400 transition">Profile</a>
+                
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('profileDropdown').addEventListener('click', function() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.classList.toggle('hidden');
+
+            if (!dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.remove('hidden');
+                dropdownMenu.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    dropdownMenu.classList.remove('opacity-0', 'scale-95');
+                    dropdownMenu.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            } else {
+                dropdownMenu.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    dropdownMenu.classList.add('hidden');
+                    dropdownMenu.classList.remove('opacity-100', 'scale-100');
+                }, 200);
+            }
+        });
+
+        
+        window.addEventListener('click', function(event) {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            if (!event.target.closest('#profileDropdown')) {
+                if (!dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        dropdownMenu.classList.add('hidden');
+                        dropdownMenu.classList.remove('opacity-100', 'scale-100');
+                    }, 200);
+                }
+            }
+        });
+
+        
+        function validateSearch() {
+            const searchInput = document.querySelector('input[type="search"]');
+            if (searchInput.value.trim() === '') {
+                alert("Please enter a search term.");
+                return false; 
+            }
+            return true; 
+        }
+    </script>
+
+</body>
+</html>
+
+
+

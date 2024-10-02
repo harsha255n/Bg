@@ -1,0 +1,69 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile Photo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; 
+        }
+    </style>
+</head>
+<body class="opacity-0 transition-opacity duration-500" id="updateProfileBody">
+
+  <div class="max-w-md mx-auto p-4">
+    <div class="bg-white p-4 border border-gray-300 rounded-lg shadow-md opacity-0 transition-opacity duration-500 profile-container">
+      <h2 class="text-center text-lg font-bold mb-4">Update Profile Photo</h2>
+      <form method="post" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div>
+          <label for="username" class="block font-bold mb-2">User</label>
+          <div class="transition-transform transform hover:scale-105">
+              {{ form.user }}
+          </div>
+        </div>
+
+        <div>
+          <label for="photo" class="block font-bold mb-2">Photo</label>
+          <div class="transition-transform transform hover:scale-105">
+            <img src="{{ profile.photo.url }}" alt="Profile Image" class="w-24 h-24 rounded-full object-cover mb-4 transition-transform transform hover:scale-110">
+              {{ form.photo }}
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2 bg-green-500 text-white font-bold rounded-lg hover:bg-green-700 transition transform hover:scale-105">
+            Submit
+        </button>
+        <a href="{% url 'profile_view' %}" class="block w-full text-center py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition transform hover:scale-105 mt-4">
+            Cancel
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const updateProfileBody = document.getElementById('updateProfileBody');
+        const profileContainer = document.querySelector('.profile-container');
+
+        // Fade in effect for the profile body
+        updateProfileBody.classList.remove('opacity-0');
+        updateProfileBody.classList.add('opacity-100');
+
+        // Fade in effect for the profile container
+        setTimeout(() => {
+            profileContainer.classList.remove('opacity-0');
+            profileContainer.classList.add('opacity-100');
+        }, 200); 
+    });
+  </script>
+
+</body>
+</html> 

@@ -1,0 +1,38 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <form method="post" enctype="multipart/form-data" class="bg-white p-6 border border-gray-300 rounded-lg shadow-md w-96 mx-auto mt-40">
+    {% csrf_token %}
+    <h1 class="text-lg font-bold mb-4">Registration Form</h1>
+    <p class="mb-10">Please fill in this form to create an account.</p>
+    <hr class="mb-10">
+
+    <label for="username" class="block font-bold mb-2"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required class="w-full p-2 mb-4 border border-gray-300 rounded-lg">
+
+    <label for="password" class="block font-bold mb-2"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required class="w-full p-2 mb-4 border border-gray-300 rounded-lg">
+
+    <label for="email" class="block font-bold mb-2"><b>Email</b></label>
+    <input type="email" placeholder="Enter Email" name="email" required class="w-full p-2 mb-4 border border-gray-300 rounded-lg">
+
+    
+
+    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">Register</button>
+
+    <hr class="mb-10">
+    <p class="mb-4">By creating an account you agree to our <a href="#" class="text-dodgerblue">Terms & Privacy</a>.</p>
+    <p class="mt-4">Already have an account? <button class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded-lg" onclick="window.location.href='{% url 'login' %}'">Login</button></p>
+  </form>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Profile Photo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+  {% block body %}
+
+  {% endblock %}
+
+  <div class="container mx-auto my-10 max-w-md bg-white p-6 rounded-lg shadow-lg opacity-0 transition-transform transform scale-90 enter-animation">
+      <h2 class="text-2xl font-bold text-center mb-4">Upload Profile Photo</h2>
+      <form method="post" enctype="multipart/form-data" class="space-y-4">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition transform active:scale-95">Submit</button>
+      </form>
+  </div>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const formContainer = document.querySelector('.enter-animation');
+
+          const options = {
+              root: null,
+              rootMargin: '0px',
+              threshold: 0.1
+          };
+
+          const observer = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.remove('opacity-0', 'scale-90');
+                      entry.target.classList.add('opacity-100', 'scale-100');
+                      observer.unobserve(entry.target); // Stop observing after animation
+                  }
+              });
+          }, options);
+
+          observer.observe(formContainer);
+      });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body class="opacity-0 transition-opacity duration-500" id="profileBody">
+
+<div class="container mx-auto mt-10 max-w-md bg-white p-6 rounded-lg shadow-md opacity-0 transition-opacity duration-500 profile-container">
+    <h2 class="text-2xl font-bold text-center mb-6">Your Profile</h2>
+    
+    <div class="bg-gray-100 rounded-lg p-6 mb-4">
+        <div class="flex flex-col items-center mb-6">
+            <img src="{{ profile.photo.url }}" alt="Profile Image" class="w-24 h-24 rounded-full object-cover mb-4 transition-transform transform hover:scale-110"> <!-- Profile image -->
+            <a href="{% url 'profile_update' %}" class="px-4 py-2 bg-gray-200 border border-gray-300 text-gray-700 rounded hover:bg-gray-300 transition transform hover:scale-105">Change Profile Photo</a>
+        </div>
+        
+        <div class="mb-6">
+            <h5 class="text-lg font-semibold mb-2">Username:</h5>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-800">{{ profile.user.username }}</span>
+                <a href="{% url 'profilechange' %}" class="px-4 py-2 bg-gray-200 border border-gray-300 text-gray-700 rounded hover:bg-gray-300 transition transform hover:scale-105">Change Username</a>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h5 class="text-lg font-semibold mb-2">Email:</h5>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-800">{{ profile.user.email }}</span>
+                <a href="{% url 'profilechange' %}" class="px-4 py-2 bg-gray-200 border border-gray-300 text-gray-700 rounded hover:bg-gray-300 transition transform hover:scale-105">Change Email</a>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h5 class="text-lg font-semibold mb-2">Password:</h5>
+            <input type="text" class="block w-full border border-gray-300 rounded-lg bg-gray-200 p-2 mb-4" value="***********" readonly>
+            <a href="{% url 'update_password' %}" class="px-4 py-2 bg-gray-200 border border-gray-300 text-gray-700 rounded hover:bg-gray-300 transition transform hover:scale-105">Change Password</a>
+        </div>
+        
+        <div class="flex justify-center">
+            <a href="{% url 'blog_list' %}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition transform hover:scale-105">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const profileBody = document.getElementById('profileBody');
+        const profileContainer = document.querySelector('.profile-container');
+
+        // Fade in effect for the profile body
+        profileBody.classList.remove('opacity-0');
+        profileBody.classList.add('opacity-100');
+
+        // Fade in effect for the profile container
+        setTimeout(() => {
+            profileContainer.classList.remove('opacity-0');
+            profileContainer.classList.add('opacity-100');
+        }, 200); // Delay for smoother animation
+    });
+</script>
+
+</body>
+</html>

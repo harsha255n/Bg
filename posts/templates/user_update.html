@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc; }
+    </style>
+</head>
+<body class="opacity-0 transition-opacity duration-500" id="updateProfileBody">
+
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg opacity-0 transition-opacity duration-500 transform scale-95" id="updateProfileForm">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Update Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="text" name="username" id="username" value="{{ form.instance.username }}" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-400" required>
+        </div>
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" id="email" value="{{ form.instance.email }}" class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-400" required>
+        </div>
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg mt-4 transition-transform transform hover:scale-105">Update Profile</button>
+    </form>
+
+    {% for message in messages %}
+    <div class="mt-4 p-4 bg-red-100 text-red-800 rounded-lg">
+        {{ message }}
+    </div>
+    {% endfor %}
+    
+    <div class="text-center mt-6">
+        <a href="{% url 'profile_view' %}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition text-center w-48">Cancel</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const body = document.getElementById('updateProfileBody');
+        const form = document.getElementById('updateProfileForm');
+
+        
+        body.classList.remove('opacity-0');
+        body.classList.add('opacity-100');
+
+        
+        setTimeout(() => {
+            form.classList.remove('opacity-0', 'scale-95');
+            form.classList.add('opacity-100', 'scale-100');
+        }, 100);
+    });
+</script>
+
+</body>
+</html>

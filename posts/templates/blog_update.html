@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Blog Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto my-10 max-w-xl bg-white p-8 rounded-lg shadow-md transform transition-all duration-500 scale-100 hover:scale-105">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Update Blog</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-4">
+                {{ data.title.errors }}
+                <label for="id_title" class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                <input type="text" name="title" id="id_title" value="{{ data.title.value }}" 
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-300" 
+                    placeholder="Enter blog title">
+            </div>
+            <div class="mb-4">
+                {{ data.content.errors }}
+                <label for="id_content" class="block text-sm font-semibold text-gray-700 mb-2">Content</label>
+                <textarea name="content" id="id_content" rows="6" 
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-300" 
+                    placeholder="Write your blog content here...">{{ data.content.value }}</textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition transform active:scale-95 duration-300">Submit</button>
+            <a href="{% url 'blog_list' %}" class="w-full block text-center mt-3 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition transform active:scale-95 duration-300">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
